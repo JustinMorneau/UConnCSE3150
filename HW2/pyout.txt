@@ -1,0 +1,153 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /home/justin/UConnCSE3150/HW2
+collected 100 items
+
+test_program.py ..............................................F.....F.F. [ 56%]
+.F....F.....FFF.............FF..............                             [100%]
+
+=================================== FAILURES ===================================
+__________________ TestTextModeRuntime.test_original_printed ___________________
+
+self = <test_program.TestTextModeRuntime object at 0x75a551e3d0d0>
+
+    def test_original_printed(self):
+        result = run_analyzer("text", "Hello World 123!")
+>       assert output_contains(result.stdout, "Original Hello World 123")
+E       AssertionError: assert False
+E        +  where False = output_contains('Original string: Hello World 123!\nLength: 16\nLetters: 10\nDigits: 3\nSpaces: 2\nPunctuation: 1\nUppercase copy: HELLO WORLD 123!\nLowercase : hello world 123!\ncontaintstestno\nFirst word: hello\n', 'Original Hello World 123')
+E        +    where 'Original string: Hello World 123!\nLength: 16\nLetters: 10\nDigits: 3\nSpaces: 2\nPunctuation: 1\nUppercase copy: HELLO WORLD 123!\nLowercase : hello world 123!\ncontaintstestno\nFirst word: hello\n' = CompletedProcess(args=['/home/justin/UConnCSE3150/HW2/analyzer', 'text', 'Hello World 123!'], returncode=0, stdout='Or...n: 1\nUppercase copy: HELLO WORLD 123!\nLowercase : hello world 123!\ncontaintstestno\nFirst word: hello\n', stderr='').stdout
+
+test_program.py:280: AssertionError
+___________________ TestTextModeRuntime.test_uppercase_copy ____________________
+
+self = <test_program.TestTextModeRuntime object at 0x75a551e3cf50>
+
+    def test_uppercase_copy(self):
+        result = run_analyzer("text", "Hello World 123!")
+>       assert output_contains(result.stdout, "Uppercase HELLO WORLD 123")
+E       AssertionError: assert False
+E        +  where False = output_contains('Original string: Hello World 123!\nLength: 16\nLetters: 10\nDigits: 3\nSpaces: 2\nPunctuation: 1\nUppercase copy: HELLO WORLD 123!\nLowercase : hello world 123!\ncontaintstestno\nFirst word: hello\n', 'Uppercase HELLO WORLD 123')
+E        +    where 'Original string: Hello World 123!\nLength: 16\nLetters: 10\nDigits: 3\nSpaces: 2\nPunctuation: 1\nUppercase copy: HELLO WORLD 123!\nLowercase : hello world 123!\ncontaintstestno\nFirst word: hello\n' = CompletedProcess(args=['/home/justin/UConnCSE3150/HW2/analyzer', 'text', 'Hello World 123!'], returncode=0, stdout='Or...n: 1\nUppercase copy: HELLO WORLD 123!\nLowercase : hello world 123!\ncontaintstestno\nFirst word: hello\n', stderr='').stdout
+
+test_program.py:304: AssertionError
+__________________ TestTextModeRuntime.test_contains_test_no ___________________
+
+self = <test_program.TestTextModeRuntime object at 0x75a551e3c290>
+
+    def test_contains_test_no(self):
+        result = run_analyzer("text", "Hello World")
+>       assert output_contains(result.stdout, "containstestno")
+E       AssertionError: assert False
+E        +  where False = output_contains('Original string: Hello World\nLength: 11\nLetters: 10\nDigits: 0\nSpaces: 1\nPunctuation: 0\nUppercase copy: HELLO WORLD\nLowercase : hello world\ncontaintstestno\nFirst word: hello\n', 'containstestno')
+E        +    where 'Original string: Hello World\nLength: 11\nLetters: 10\nDigits: 0\nSpaces: 1\nPunctuation: 0\nUppercase copy: HELLO WORLD\nLowercase : hello world\ncontaintstestno\nFirst word: hello\n' = CompletedProcess(args=['/home/justin/UConnCSE3150/HW2/analyzer', 'text', 'Hello World'], returncode=0, stdout='Origina...Punctuation: 0\nUppercase copy: HELLO WORLD\nLowercase : hello world\ncontaintstestno\nFirst word: hello\n', stderr='').stdout
+
+test_program.py:312: AssertionError
+________ TestTextModeRuntime.test_first_word_not_printed_without_space _________
+
+self = <test_program.TestTextModeRuntime object at 0x75a551e3d6d0>
+
+    def test_first_word_not_printed_without_space(self):
+        result = run_analyzer("text", "hello")
+>       assert not output_contains(result.stdout, "firstword")
+E       AssertionError: assert not True
+E        +  where True = output_contains('Original string: hello\nLength: 5\nLetters: 5\nDigits: 0\nSpaces: 0\nPunctuation: 0\nUppercase copy: HELLO\nLowercase : hello\ncontaintstestno\nFirst word: hello\n', 'firstword')
+E        +    where 'Original string: hello\nLength: 5\nLetters: 5\nDigits: 0\nSpaces: 0\nPunctuation: 0\nUppercase copy: HELLO\nLowercase : hello\ncontaintstestno\nFirst word: hello\n' = CompletedProcess(args=['/home/justin/UConnCSE3150/HW2/analyzer', 'text', 'hello'], returncode=0, stdout='Original stri...nSpaces: 0\nPunctuation: 0\nUppercase copy: HELLO\nLowercase : hello\ncontaintstestno\nFirst word: hello\n', stderr='').stdout
+
+test_program.py:325: AssertionError
+____________________ TestTextModeRuntime.test_output_order _____________________
+
+self = <test_program.TestTextModeRuntime object at 0x75a551e3dc70>
+
+    def test_output_order(self):
+        """Verify outputs appear in the correct order."""
+        result = run_analyzer("text", "Hi there")
+        out = normalize(result.stdout)
+        expected = [
+            "original", "length", "letters", "digits", "spaces",
+            "punctuation", "uppercase", "lowercase", "containstest",
+            "firstword",
+        ]
+        positions = []
+        for label in expected:
+            pos = out.find(label)
+>           assert pos != -1, f"Missing label in output: {label}"
+E           AssertionError: Missing label in output: containstest
+E           assert -1 != -1
+
+test_program.py:363: AssertionError
+_________________ TestAddModeRuntime.test_string_concatenation _________________
+
+self = <test_program.TestAddModeRuntime object at 0x75a551e3e300>
+
+    def test_string_concatenation(self):
+        result = run_analyzer("add", "hello", "world")
+>       assert output_contains(result.stdout, "Result helloworld")
+E       assert False
+E        +  where False = output_contains('', 'Result helloworld')
+E        +    where '' = CompletedProcess(args=['/home/justin/UConnCSE3150/HW2/analyzer', 'add', 'hello', 'world'], returncode=-6, stdout='', stderr="terminate called after throwing an instance of 'std::invalid_argument'\n  what():  stod\n").stdout
+
+test_program.py:397: AssertionError
+______________ TestAddModeRuntime.test_string_concatenation_mixed ______________
+
+self = <test_program.TestAddModeRuntime object at 0x75a551e3e420>
+
+    def test_string_concatenation_mixed(self):
+        result = run_analyzer("add", "abc", "123xyz")
+>       assert output_contains(result.stdout, "Result abc123xyz")
+E       assert False
+E        +  where False = output_contains('', 'Result abc123xyz')
+E        +    where '' = CompletedProcess(args=['/home/justin/UConnCSE3150/HW2/analyzer', 'add', 'abc', '123xyz'], returncode=-6, stdout='', stderr="terminate called after throwing an instance of 'std::invalid_argument'\n  what():  stod\n").stdout
+
+test_program.py:401: AssertionError
+_____________ TestAddModeRuntime.test_negative_numbers_as_strings ______________
+
+self = <test_program.TestAddModeRuntime object at 0x75a551e3e540>
+
+    def test_negative_numbers_as_strings(self):
+        """Negative sign means not 'only digits', no decimal -> string concat."""
+        result = run_analyzer("add", "-5", "-3")
+>       assert output_contains(result.stdout, "Result 53")
+E       AssertionError: assert False
+E        +  where False = output_contains('Result -8\n', 'Result 53')
+E        +    where 'Result -8\n' = CompletedProcess(args=['/home/justin/UConnCSE3150/HW2/analyzer', 'add', '-5', '-3'], returncode=0, stdout='Result -8\n', stderr='').stdout
+
+test_program.py:406: AssertionError
+____________ TestStatsModeRuntime.test_palindrome_case_insensitive _____________
+
+self = <test_program.TestStatsModeRuntime object at 0x75a551e3ecc0>
+
+    def test_palindrome_case_insensitive(self):
+        """'Racecar' should be detected as palindrome."""
+        result = run_analyzer("stats", "Racecar")
+>       assert output_contains(result.stdout, "Palindrome Yes")
+E       AssertionError: assert False
+E        +  where False = output_contains('Length 7\nUnique 5\nAlphanumeric Yes\nReversed racecaR\nWithout spaces Racecar\nPalindrome No\n', 'Palindrome Yes')
+E        +    where 'Length 7\nUnique 5\nAlphanumeric Yes\nReversed racecaR\nWithout spaces Racecar\nPalindrome No\n' = CompletedProcess(args=['/home/justin/UConnCSE3150/HW2/analyzer', 'stats', 'Racecar'], returncode=0, stdout='Length 7\nUnique 5\nAlphanumeric Yes\nReversed racecaR\nWithout spaces Racecar\nPalindrome No\n', stderr='').stdout
+
+test_program.py:471: AssertionError
+_______________ TestStatsModeRuntime.test_palindrome_with_spaces _______________
+
+self = <test_program.TestStatsModeRuntime object at 0x75a551e3ede0>
+
+    def test_palindrome_with_spaces(self):
+        """'Race Car' with spaces removed and lowered is 'racecar' -> palindrome."""
+        result = run_analyzer("stats", "Race Car")
+>       assert output_contains(result.stdout, "Palindrome Yes")
+E       AssertionError: assert False
+E        +  where False = output_contains('Length 8\nUnique 7\nAlphanumeric No\nReversed raC ecaR\nWithout spaces RaceCar\nPalindrome No\n', 'Palindrome Yes')
+E        +    where 'Length 8\nUnique 7\nAlphanumeric No\nReversed raC ecaR\nWithout spaces RaceCar\nPalindrome No\n' = CompletedProcess(args=['/home/justin/UConnCSE3150/HW2/analyzer', 'stats', 'Race Car'], returncode=0, stdout='Length 8\nUnique 7\nAlphanumeric No\nReversed raC ecaR\nWithout spaces RaceCar\nPalindrome No\n', stderr='').stdout
+
+test_program.py:476: AssertionError
+=========================== short test summary info ============================
+FAILED test_program.py::TestTextModeRuntime::test_original_printed - Assertio...
+FAILED test_program.py::TestTextModeRuntime::test_uppercase_copy - AssertionE...
+FAILED test_program.py::TestTextModeRuntime::test_contains_test_no - Assertio...
+FAILED test_program.py::TestTextModeRuntime::test_first_word_not_printed_without_space
+FAILED test_program.py::TestTextModeRuntime::test_output_order - AssertionErr...
+FAILED test_program.py::TestAddModeRuntime::test_string_concatenation - asser...
+FAILED test_program.py::TestAddModeRuntime::test_string_concatenation_mixed
+FAILED test_program.py::TestAddModeRuntime::test_negative_numbers_as_strings
+FAILED test_program.py::TestStatsModeRuntime::test_palindrome_case_insensitive
+FAILED test_program.py::TestStatsModeRuntime::test_palindrome_with_spaces - A...
+======================== 10 failed, 90 passed in 0.54s =========================
