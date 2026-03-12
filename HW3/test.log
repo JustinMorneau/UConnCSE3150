@@ -1,0 +1,8 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0
+rootdir: /home/justin/UConnCSE3150/HW3
+collected 52 items
+
+test_program.py ....................................................     [100%]
+
+============================== 52 passed in 2.75s ==============================
